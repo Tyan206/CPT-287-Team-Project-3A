@@ -1,6 +1,19 @@
 package binary_tree_infix_exp_parser;
 
 public class Program {
+	//This will be in Infix_Parser class
+	public class Tree {
+	// Data fields
+    public String data;
+    public Tree left, right;
+    // Constructors
+    public Tree(String value) { data = value; left = right = null; }
+    public Tree(String value, Tree leftChild, Tree rightChild) {
+        data = value;
+        left = leftChild;
+        right = rightChild;
+    }
+}
 	
 	// I will move functions to where it should be later. For now, have the functions in Program for testing
 		@SuppressWarnings("null")
@@ -149,6 +162,25 @@ public class Program {
 		throw new IllegalArgumentException("Operator not supported");
 	}
 	public static void main(String[] args) {
+		String second = "( 6 + ( 8 / 2 ) ) * ( 3 - ( 1 - 3 ) )";
+		String infix = " ( 1 ^ 2 ^ ( 3 / 4 / 5 - 6 ) ^ ( 7 * 8 - 9 * 10 ) ) ";
+		String third = "( 4 >= 4 ) && 0";
+		String postfix = infixToPostfix(second);
+
+		Tree test = postfixToTree(postfix);
+		Tree test1 = infixToTree(second);
+		//System.out.println(test.left.left.data);
+		//System.out.println(infix);
+		System.out.println(postfix);
+		System.out.println();
+		postorderTraversal(test);
+		System.out.println();
+		//System.out.println(test1.data);
+		postorderTraversal(test1);
+		
+		System.out.println();
+		
+		//System.out.println(eval(test1));
 		
 	}
 }
