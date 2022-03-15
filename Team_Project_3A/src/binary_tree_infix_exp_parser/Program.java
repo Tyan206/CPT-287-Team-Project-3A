@@ -144,11 +144,78 @@ public class Program {
 		}
 		return operands.peek();
 	}
-
+	
+	/** Evaluates an expression using a expression tree. 
+	 * "^", "*", "/", "%", "+", "-", ">", ">=", "<", "<=", "==", "!=", "&&", "||" 14 totals
+	    @param root: tree to evaluate
+	    @return: evaluation result
+	*/
+	public static int evaluate(Tree root){
+		if(root == null) return 0;
+		
+		if(root.left == null && root.right == null) return Integer.valueOf(root.data);
+		
+		//Evaluate left subtree
+		int evalLeft = evaluate(root.left);
+		
+		//Evaluate right subtree
+		int evalRight = evaluate(root.right);
+		
+		//Apply operators
+		if(root.data.equals("+")) return evalLeft + evalRight;
+		if(root.data.equals("-")) return evalLeft - evalRight;
+		if(root.data.equals("*")) return evalLeft * evalRight;
+		
+		if(root.data.equals("%")) return evalLeft % evalRight;
+		if(root.data.equals("^")) return evalLeft ^ evalRight;
+		if(root.data.equals(">")) {
+			if(evalLeft > evalRight) {
+				return 1;
+			}else return 0;
+		}
+		if(root.data.equals("<")) {
+			if(evalLeft < evalRight) {
+				return 1;
+			}else return 0;
+		}
+		if(root.data.equals(">=")) {
+			if(evalLeft >= evalRight) {
+				return 1;
+			}else return 0;
+		}
+		if(root.data.equals("<=")) {
+			if(evalLeft <= evalRight) {
+				return 1;
+			}else return 0;
+		}
+		if(root.data.equals("==")) {
+			if(evalLeft == evalRight) {
+				return 1;
+			}else return 0;
+		}
+		if(root.data.equals("!=")) {
+			if(evalLeft != evalRight) {
+				return 1;
+			}else return 0;
+		}
+		if(root.data.equals("&&")) {
+			if(evalLeft == 1 && evalRight == 1) {
+				return 1;
+			}else return 0;
+		}
+		if(root.data.equals("||")) {
+			if(evalLeft == 1 || evalRight == 1) {
+				return 1;
+			}else return 0;
+		}
+		
+		return evalLeft / evalRight;
+	}
+	
 	/** Returns the precedence of an operator.
-    @param oper: operator to find its precedence
-    @return: precedence of the operator
-    @throws IllegalArgumentException: operator is not supported.
+   	 @param oper: operator to find its precedence
+    	@return: precedence of the operator
+    	@throws IllegalArgumentException: operator is not supported.
 	 */
 	public static int precedence(String oper) {
 		if(oper.equals(")")) { return 0;}
