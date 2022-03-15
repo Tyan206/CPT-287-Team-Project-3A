@@ -1,22 +1,24 @@
 package binary_tree_infix_exp_parser;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.PriorityQueue;
+import java.util.Scanner;
+import java.util.Set;
+import java.util.Stack;
+
+
+
+
 public class Program {
-	//This will be in Infix_Parser class
-	public class Tree {
-	// Data fields
-    public String data;
-    public Tree left, right;
-    // Constructors
-    public Tree(String value) { data = value; left = right = null; }
-    public Tree(String value, Tree leftChild, Tree rightChild) {
-        data = value;
-        left = leftChild;
-        right = rightChild;
-    }
-}
-	
-	// I will move functions to where it should be later. For now, have the functions in Program for testing
-		@SuppressWarnings("null")
+
+
+	@SuppressWarnings("null")
 	public static Tree postfixToTree(String postfix) {
 		Tree expression = null, root = null;
 		Stack<Tree> stk = new Stack<Tree>();
@@ -144,8 +146,52 @@ public class Program {
 		}
 		return operands.peek();
 	}
+
+	/** Returns the precedence of an operator.
+    @param oper: operator to find its precedence
+    @return: precedence of the operator
+    @throws IllegalArgumentException: operator is not supported.
+	 */
+	public static int precedence(String oper) {
+		if(oper.equals(")")) { return 0;}
+		if (oper.equals("||")){ return 1; }
+		if (oper.equals("&&")){ return 2; }
+		if (oper.equals("==") || (oper.equals("!="))){ return 3; }
+		if (oper.equals(">") || (oper.equals(">=")) || (oper.equals("<")) || (oper.equals("<="))){ return 4; }
+		if (oper.equals("+") || (oper.equals("-"))){ return 5; }
+		if (oper.equals("*") || (oper.equals("/")) || (oper.equals("%"))){ return 6; }
+		if (oper.equals("^")){ return 7; }
+		throw new IllegalArgumentException("Operator not supported");
+	}
+
+	/** Converts an infix expression to postfix expression.
+    @param infixExp: infix expression to convert
+    @return: result postfix expression
+	 */
+	public static String infixToPostfix(String infixExp) {
+		Stack<String> stk = new Stack<>();
+		StringBuilder postfix = new StringBuilder();
+		Scanner scanner = new Scanner(infixExp);
+		while (scanner.hasNext()) {
+			String token = scanner.next();
+			if (Character.isDigit(token.charAt(0))) { postfix.append(token).append(' '); }
+			else if (token.equals("(")) { stk.push(token); }
+			else if (token.equals(")")) {
+				while (!stk.peek().equals("(")) { postfix.append(stk.pop()).append(' '); }
+				stk.pop();
+			} else {
+				while (!stk.isEmpty() && !stk.peek().equals("(") && precedence(token) <= precedence(stk.peek())) {
+					postfix.append(stk.pop()).append(' ');
+				}
+				stk.push(token);
+			}
+		}
+		while (!stk.isEmpty()) { postfix.append(stk.pop()).append(' '); }
+		scanner.close();
+		return postfix.toString();
+	}
 	
-	/** Evaluates an expression using a expression tree. 
+/** Evaluates an expression using a expression tree. 
 	 * "^", "*", "/", "%", "+", "-", ">", ">=", "<", "<=", "==", "!=", "&&", "||" 14 totals
 	    @param root: tree to evaluate
 	    @return: evaluation result
@@ -212,22 +258,7 @@ public class Program {
 		return evalLeft / evalRight;
 	}
 	
-	/** Returns the precedence of an operator.
-   	 @param oper: operator to find its precedence
-    	@return: precedence of the operator
-    	@throws IllegalArgumentException: operator is not supported.
-	 */
-	public static int precedence(String oper) {
-		if(oper.equals(")")) { return 0;}
-		if (oper.equals("||")){ return 1; }
-		if (oper.equals("&&")){ return 2; }
-		if (oper.equals("==") || (oper.equals("!="))){ return 3; }
-		if (oper.equals(">") || (oper.equals(">=")) || (oper.equals("<")) || (oper.equals("<="))){ return 4; }
-		if (oper.equals("+") || (oper.equals("-"))){ return 5; }
-		if (oper.equals("*") || (oper.equals("/")) || (oper.equals("%"))){ return 6; }
-		if (oper.equals("^")){ return 7; }
-		throw new IllegalArgumentException("Operator not supported");
-	}
+	
 	public static void main(String[] args) {
 		String second = "( 6 + ( 8 / 2 ) ) * ( 3 - ( 1 - 3 ) )";
 		String infix = " ( 1 ^ 2 ^ ( 3 / 4 / 5 - 6 ) ^ ( 7 * 8 - 9 * 10 ) ) ";
@@ -247,7 +278,9 @@ public class Program {
 		
 		System.out.println();
 		
-		//System.out.println(eval(test1));
+		System.out.println(eval(test1));
 		
+
+
 	}
 }
