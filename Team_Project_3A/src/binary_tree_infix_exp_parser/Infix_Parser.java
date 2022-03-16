@@ -74,8 +74,8 @@ public class Infix_Parser {
 	}
 
 	/** Tests whether parentheses are balanced in an expression.
-	@param exp: expression to test
-    @return: {true} if parentheses are balanced in the expression; {false} otherwise
+	 *@param exp: expression to test
+    	 *@return: {true} if parentheses are balanced in the expression; {false} otherwise
 	 */
 	private boolean isBalanced(String exp) {
 		Stack<Character> stk = new Stack<>();
@@ -92,7 +92,10 @@ public class Infix_Parser {
 		return stk.isEmpty();
 	}
 
-
+	/** Convert the postfix expression into the binary tree
+	 *@param postfix: the postfix expression
+    	 *@return: the expression tree
+	 */
 	@SuppressWarnings("null")
 	public ETree postfixToETree(String postfix) {
 		ETree expression = null, root = null;
@@ -125,8 +128,8 @@ public class Infix_Parser {
 	}
 
 	/** Postorder traverses a binary ETree.
-    @param root: the root node of a binary ETree
-    @param <T>: Object type
+         *@param root: the root node of a binary ETree
+         *@param <T>: Object type
 	 */
 	public void postorderTraversal(ETree root) {
 		if (root != null) {
@@ -137,8 +140,8 @@ public class Infix_Parser {
 	}
 
 	/** Creates a deep copy of a binary tree.
-    @param root: root node of the original binary tree
-    @return: root node of the deep copy
+          *@param root: root node of the original binary tree
+          *@return: root node of the deep copy
 	 */
 	public ETree deepCopy(ETree root) {
 		// Base case
@@ -149,6 +152,10 @@ public class Infix_Parser {
 	}
 	
 	
+	/** Convert an infix expression to the binary tree
+	 *@param input: the infix expression
+    	 *@return: the expression tree of the infix
+	 */
 	public ETree infixToETree(String input) {
 
 		// Stack to hold operands stN
