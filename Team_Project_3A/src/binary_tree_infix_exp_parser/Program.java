@@ -1,12 +1,12 @@
 package binary_tree_infix_exp_parser;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Scanner;
 
 
 public class Program {
 
-	public static void main(String[] args) throws FileNotFoundException {
+	public static void main(String[] args) throws IOException {
 		
 		/*Main program where we will read in data from input file
 		  and print output to console */
