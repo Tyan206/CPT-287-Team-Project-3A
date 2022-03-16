@@ -4,12 +4,8 @@ import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 
-
-
-
 public class Program {
 
-	
 	public static void main(String[] args) throws FileNotFoundException {
 		
 		/*Main program where we will read in data from input file
@@ -24,8 +20,7 @@ public class Program {
 			System.out.println(parser.toString());
 			exp = "";
 		}
-
-
+		scanner.close();
+		inputfile.close();
 	}
-	
-	
+}	
