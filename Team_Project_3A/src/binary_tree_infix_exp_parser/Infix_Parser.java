@@ -120,6 +120,7 @@ public class Infix_Parser {
 		//System.out.println("root: " + root.left.left.data);
 
 		expression = deepCopy(root);
+		scanner.close();
 		return expression;
 	}
 
@@ -212,6 +213,7 @@ public class Infix_Parser {
 			operands.add(root);
 
 		}
+		scanner.close();
 		return operands.peek();
 	}
 
